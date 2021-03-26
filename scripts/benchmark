@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),'..','lib')))
 
 require 'wordlist'
@@ -13,13 +12,13 @@ FileUtils.rm_f(path)
 Benchmark.bm do |bm|
   bm.report('build') do
     Wordlist::Builder.build(path) do |wordlist|
-      wordlist.parse_file('/home/krish/hello.txt')
+      wordlist.parse_file('/home/hal/shaks12.txt')
     end
   end
 
   bm.report('each_unique') do
     Wordlist::FlatFile.new(path) do |wordlist|
-      wordlist.each_unique { |word| word}
+      wordlist.each_unique { |word| word }
     end
   end
 
@@ -27,7 +26,7 @@ Benchmark.bm do |bm|
     Wordlist::FlatFile.new(path) do |wordlist|
       wordlist.mutate /o/i, '0'
 
-      wordlist.each_mutation { |word| word}
+      wordlist.each_mutation { |word| word }
     end
   end
 
@@ -51,4 +50,10 @@ Benchmark.bm do |bm|
   end
 end
 
+Benchmark.bm do |bm|
+  mutator = Wordlist::Mutator.new(/o/i, '0')
+
+  bm.report('Mutator#each') do
+    mutator.each('lololololoLOLOLOLOLO') { |word| }
+  end
 end
