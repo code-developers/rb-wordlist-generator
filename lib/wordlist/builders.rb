@@ -1,0 +1,1 @@
+require 'wordlist/builders/website'
